@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d236b52a6af73944b5a19e92b4d98ab, type: 3}
+  m_Name: DefaultMatch
+  m_EditorClassIdentifier: 
+  rounds:
+  - {fileID: 11400000, guid: 3f74d39420c66d245b3b82219759f957, type: 2}
+  - {fileID: 11400000, guid: f9c4d9ec257527343a08281ba5993ed4, type: 2}
+  - {fileID: 11400000, guid: 4c4393413bcc85e409c27b300b79159c, type: 2}

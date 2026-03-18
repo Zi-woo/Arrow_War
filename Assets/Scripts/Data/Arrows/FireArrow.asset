@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2be6faa2797c1e54192e2f0b1b429f8d, type: 3}
+  m_Name: FireArrow
+  m_EditorClassIdentifier: 
+  displayName: Fire Arrow
+  icon: {fileID: 21300000, guid: cb71f977c061814419dd5a6a79a1a061, type: 3}
+  prefab: {fileID: 7576388973838668722, guid: f85f2a689299bda4a9dc17591c4ff4c8, type: 3}
+  damage: 20
+  splashRadius: 0
+  flightDuration: 1.2
+  gravityScale: 1
+  cooldownTime: 1
+  ownedByDefault: 0
+  price: 1
+  description: fire
