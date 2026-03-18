@@ -13,7 +13,7 @@ namespace ArrowWar.Castle
 
         [Header("Health Bar")]
         [Tooltip("How far above the castle centre the health bar appears (world units).")]
-        [SerializeField] private float healthBarOffsetY = 1.5f;
+        [SerializeField] private float healthBarOffsetY = 3f;
 
         private int _currentHP;
 
