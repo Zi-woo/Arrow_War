@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2be6faa2797c1e54192e2f0b1b429f8d, type: 3}
-  m_Name: FireArrow
+  m_Name: PoisonArrow
   m_EditorClassIdentifier: 
-  displayName: Fire Arrow
-  icon: {fileID: 21300000, guid: cb71f977c061814419dd5a6a79a1a061, type: 3}
-  prefab: {fileID: 7576388973838668722, guid: f85f2a689299bda4a9dc17591c4ff4c8, type: 3}
+  displayName: Poison Arrow
+  icon: {fileID: 21300000, guid: e8f4e1ea22c66c7478593a19e0add994, type: 3}
+  prefab: {fileID: 7576388973838668722, guid: 364b444dddd83e648bfe8ebdbe6204c9, type: 3}
   damage: 20
   splashRadius: 1
   flightDuration: 1.2
@@ -22,4 +22,4 @@ MonoBehaviour:
   cooldownTime: 1
   ownedByDefault: 0
   price: 1
-  description: fire
+  description: Poison
