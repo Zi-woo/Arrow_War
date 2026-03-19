@@ -19,6 +19,17 @@ namespace ArrowWar.Data
         [Tooltip("Particle prefab spawned at the impact point. Null = no effect.")]
         public GameObject hitEffectPrefab;
 
+        [Header("Status Effects")]
+        [Tooltip("Slow percentage applied on hit. 0 = no slow, 0.5 = 50% slower.")]
+        [Range(0f, 1f)]
+        public float slowPercent = 0f;
+        [Tooltip("Duration of the slow effect in seconds.")]
+        public float slowDuration = 0f;
+
+        [Header("On-Hit Area")]
+        [Tooltip("Persistent area prefab spawned at impact (e.g. PoisonCloud). Null = none.")]
+        public GameObject onHitAreaPrefab;
+
         [Header("Projectile Physics")]
         [Tooltip("Total seconds the arrow takes to reach the clicked target. Controls arc height.")]
         public float flightDuration = 1.5f;

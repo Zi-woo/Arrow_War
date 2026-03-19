@@ -1573,6 +1573,7 @@ MonoBehaviour:
   matches:
   - {fileID: 11400000, guid: e765a7fa4a281a8488ee8480852dcd19, type: 2}
   - {fileID: 11400000, guid: 92464482dab79c148976251749aaf554, type: 2}
+  - {fileID: 11400000, guid: 30b388f4f70a1c04081c09c71e71acbe, type: 2}
   upgradePanel: {fileID: 6347995}
   upgradeOpenDelay: 0.8
 --- !u!4 &1454127079

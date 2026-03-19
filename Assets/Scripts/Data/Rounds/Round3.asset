@@ -15,5 +15,5 @@ MonoBehaviour:
   startDelay: 1
   spawnEntries:
   - enemyData: {fileID: 11400000, guid: 37188b84d0b825a49a09347976cfcc8c, type: 2}
-    count: 1
+    count: 5
     spawnInterval: 1.5

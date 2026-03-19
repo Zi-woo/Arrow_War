@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using ArrowWar.Castle;
 using ArrowWar.Data;
+using ArrowWar.Effects;
 
 namespace ArrowWar.Enemy
 {
@@ -29,6 +30,7 @@ namespace ArrowWar.Enemy
 
         // Optional — null-safe if the prefab has no Animator.
         private Animator _animator;
+        private StatusEffectReceiver _statusFx;
 
         // Health bar runtime refs (built in Start)
         private RectTransform _fillRect;
@@ -44,6 +46,7 @@ namespace ArrowWar.Enemy
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _statusFx = GetComponent<StatusEffectReceiver>();
         }
 
         /// <summary>Called by EnemySpawner immediately after instantiation.</summary>
@@ -75,7 +78,8 @@ namespace ArrowWar.Enemy
 
         private void MoveAndCheckContact()
         {
-            transform.Translate(Vector2.left * (_data.moveSpeed * Time.deltaTime));
+            float speedMul = _statusFx != null ? _statusFx.SpeedMultiplier : 1f;
+            transform.Translate(Vector2.left * (_data.moveSpeed * speedMul * Time.deltaTime));
 
             if (_targetCastle == null) return;
 

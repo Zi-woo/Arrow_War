@@ -16,11 +16,14 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: e8f4e1ea22c66c7478593a19e0add994, type: 3}
   prefab: {fileID: 7576388973838668722, guid: 364b444dddd83e648bfe8ebdbe6204c9, type: 3}
   damage: 20
-  splashRadius: 3
+  splashRadius: 0
   hitEffectPrefab: {fileID: 100006, guid: 2ffc588afbc8e364dad6109fe9ad7a54, type: 3}
+  slowPercent: 0
+  slowDuration: 0
+  onHitAreaPrefab: {fileID: 2375516065246417026, guid: 3b0979edce30634448c476ef24085117, type: 3}
   flightDuration: 1.2
   gravityScale: 1
-  cooldownTime: 1
-  ownedByDefault: 1
-  price: 1
+  cooldownTime: 8
+  ownedByDefault: 0
+  price: 40
   description: Poison

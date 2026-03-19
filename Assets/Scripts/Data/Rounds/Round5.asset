@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e308534757d974d47bcbfcaac18c87b7, type: 3}
-  m_Name: Round1
+  m_Name: Round5
   m_EditorClassIdentifier: 
   startDelay: 1
   spawnEntries:
   - enemyData: {fileID: 11400000, guid: 37188b84d0b825a49a09347976cfcc8c, type: 2}
-    count: 3
+    count: 2
+    spawnInterval: 1.5
+  - enemyData: {fileID: 11400000, guid: c670ef6e82a89f84584a24e8eb8c6d7c, type: 2}
+    count: 4
     spawnInterval: 1.5

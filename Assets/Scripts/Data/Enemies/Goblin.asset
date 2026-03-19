@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e308534757d974d47bcbfcaac18c87b7, type: 3}
-  m_Name: Round1
+  m_Script: {fileID: 11500000, guid: 899a48c0c6d23b042a8af2a6130f7685, type: 3}
+  m_Name: Goblin
   m_EditorClassIdentifier: 
-  startDelay: 1
-  spawnEntries:
-  - enemyData: {fileID: 11400000, guid: 37188b84d0b825a49a09347976cfcc8c, type: 2}
-    count: 3
-    spawnInterval: 1.5
+  displayName: Goblin
+  prefab: {fileID: 7681782479615333137, guid: 58c49551ae89c8943b5f467942f173bf, type: 3}
+  maxHP: 100
+  moveSpeed: 1.3
+  attackDamage: 20
+  attackInterval: 1.5
+  goldReward: 15

@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 899a48c0c6d23b042a8af2a6130f7685, type: 3}
-  m_Name: Soldier
+  m_Script: {fileID: 11500000, guid: e308534757d974d47bcbfcaac18c87b7, type: 3}
+  m_Name: Round6
   m_EditorClassIdentifier: 
-  displayName: Soldier
-  prefab: {fileID: 7681782479615333137, guid: 999cdd01a0e3dc041a70d070ba0b2add, type: 3}
-  maxHP: 30
-  moveSpeed: 0.5
-  attackDamage: 10
-  goldReward: 5
+  startDelay: 1
+  spawnEntries:
+  - enemyData: {fileID: 11400000, guid: c670ef6e82a89f84584a24e8eb8c6d7c, type: 2}
+    count: 5
+    spawnInterval: 1.5

@@ -18,9 +18,12 @@ MonoBehaviour:
   damage: 20
   splashRadius: 3
   hitEffectPrefab: {fileID: 100004, guid: 417d95259df90e4488eb927fde45cba3, type: 3}
+  slowPercent: 0.5
+  slowDuration: 2
+  onHitAreaPrefab: {fileID: 0}
   flightDuration: 1.2
   gravityScale: 1
-  cooldownTime: 1
-  ownedByDefault: 1
-  price: 1
+  cooldownTime: 6
+  ownedByDefault: 0
+  price: 30
   description: Ice

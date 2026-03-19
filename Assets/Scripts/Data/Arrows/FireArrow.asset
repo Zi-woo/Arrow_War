@@ -18,9 +18,12 @@ MonoBehaviour:
   damage: 20
   splashRadius: 3
   hitEffectPrefab: {fileID: 100004, guid: d205bba4d197a5f45a64abfcc6123c20, type: 3}
+  slowPercent: 0
+  slowDuration: 0
+  onHitAreaPrefab: {fileID: 0}
   flightDuration: 1.2
   gravityScale: 1
-  cooldownTime: 1
-  ownedByDefault: 1
-  price: 1
+  cooldownTime: 4
+  ownedByDefault: 0
+  price: 20
   description: fire

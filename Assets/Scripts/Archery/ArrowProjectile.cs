@@ -1,6 +1,7 @@
 using UnityEngine;
 using ArrowWar.Castle;
 using ArrowWar.Data;
+using ArrowWar.Effects;
 using ArrowWar.Enemy;
 
 namespace ArrowWar.Archery
@@ -93,21 +94,28 @@ namespace ArrowWar.Archery
         private void HitEnemy(Collider2D enemyCollider)
         {
             if (_data.splashRadius > 0f)
-                ApplySplashDamage(transform.position, _data.splashRadius, _data.damage);
+            {
+                Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, _data.splashRadius);
+                foreach (Collider2D hit in hits)
+                {
+                    if (hit.CompareTag("Enemy"))
+                        ApplyHitEffects(hit);
+                }
+            }
             else
-                enemyCollider.GetComponent<EnemyUnit>()?.TakeDamage(_data.damage);
+            {
+                ApplyHitEffects(enemyCollider);
+            }
 
             DestroyProjectile();
         }
 
-        private void ApplySplashDamage(Vector2 center, float radius, int damage)
+        private void ApplyHitEffects(Collider2D target)
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(center, radius);
-            foreach (Collider2D hit in hits)
-            {
-                if (hit.CompareTag("Enemy"))
-                    hit.GetComponent<EnemyUnit>()?.TakeDamage(damage);
-            }
+            target.GetComponent<EnemyUnit>()?.TakeDamage(_data.damage);
+
+            if (_data.slowPercent > 0f)
+                target.GetComponent<StatusEffectReceiver>()?.ApplySlow(_data.slowPercent, _data.slowDuration);
         }
 
         private void SpawnHitEffect()
@@ -119,10 +127,17 @@ namespace ArrowWar.Archery
             }
         }
 
+        private void SpawnOnHitArea()
+        {
+            if (_data.onHitAreaPrefab != null)
+                Instantiate(_data.onHitAreaPrefab, transform.position, Quaternion.identity);
+        }
+
         private void DestroyProjectile()
         {
             _hasHit = true;
             SpawnHitEffect();
+            SpawnOnHitArea();
             Destroy(gameObject);
         }
     }
