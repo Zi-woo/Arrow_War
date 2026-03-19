@@ -3,15 +3,15 @@
 > 화살로 몰려오는 적을 막아라!
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/7916469b-07fb-428d-9567-34c0c1c82cb1" width="400"/>
+  <img src="https://github.com/user-attachments/assets/7916469b-07fb-428d-9567-34c0c1c82cb1" width="350"/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/user-attachments/assets/f0dd3811-f886-4d09-8c32-6a45ce5ba351" width="400"/>
+  <img src="https://github.com/user-attachments/assets/f0dd3811-f886-4d09-8c32-6a45ce5ba351" width="350"/>
 </div>
 </br>
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/ed2d89af-b4d2-400e-ac34-13afe531528d" width="400"/>
+  <img src="https://github.com/user-attachments/assets/ed2d89af-b4d2-400e-ac34-13afe531528d" width="350"/>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://github.com/user-attachments/assets/6c1ad041-defb-423d-bfc2-875eff65f900" width="400"/>
+  <img src="https://github.com/user-attachments/assets/6c1ad041-defb-423d-bfc2-875eff65f900" width="350"/>
 </div>
 
 ---
