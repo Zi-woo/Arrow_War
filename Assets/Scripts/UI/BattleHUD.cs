@@ -31,16 +31,20 @@ namespace ArrowWar.UI
 
         private void Start()
         {
-            resultPanel.SetActive(false);
+            if (resultPanel == null)   Debug.LogError("[BattleHUD] 'resultPanel' is not assigned in the Inspector.", this);
+            if (resultText == null)    Debug.LogError("[BattleHUD] 'resultText' is not assigned in the Inspector.", this);
+            if (restartButton == null) Debug.LogError("[BattleHUD] 'restartButton' is not assigned in the Inspector.", this);
+            if (playerCastle == null)  Debug.LogError("[BattleHUD] 'playerCastle' is not assigned in the Inspector.", this);
 
-            playerCastle.OnDamaged += HandleHPChanged;
-            GoldManager.Instance.OnGoldChanged += HandleGoldChanged;
+            resultPanel?.SetActive(false);
 
-            restartButton.onClick.AddListener(() => GameFlowManager.Instance.RestartBattle());
+            if (playerCastle != null) playerCastle.OnDamaged += HandleHPChanged;
+            if (GoldManager.Instance != null) GoldManager.Instance.OnGoldChanged += HandleGoldChanged;
+            if (restartButton != null) restartButton.onClick.AddListener(() => GameFlowManager.Instance.RestartBattle());
 
             // Initialise display with current values.
-            HandleHPChanged(playerCastle.CurrentHP, playerCastle.MaxHP);
-            HandleGoldChanged(GoldManager.Instance.MatchGold);
+            if (playerCastle != null) HandleHPChanged(playerCastle.CurrentHP, playerCastle.MaxHP);
+            if (GoldManager.Instance != null) HandleGoldChanged(GoldManager.Instance.MatchGold);
         }
 
         private void OnDestroy()
@@ -67,6 +71,11 @@ namespace ArrowWar.UI
         /// <summary>Called by GameFlowManager when the match ends.</summary>
         public void ShowResult(bool victory)
         {
+            if (resultPanel == null || resultText == null)
+            {
+                Debug.LogError("[BattleHUD] Cannot show result — resultPanel or resultText is not assigned in the Inspector.", this);
+                return;
+            }
             resultPanel.SetActive(true);
             resultText.text = victory ? "VICTORY!" : "DEFEAT";
         }

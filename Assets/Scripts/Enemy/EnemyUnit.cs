@@ -8,7 +8,12 @@ namespace ArrowWar.Enemy
 {
     /// <summary>
     /// Attached to each spawned enemy instance. Moves left toward the player castle,
-    /// damages it on contact, and dies when HP reaches 0.
+    /// stops at the gate, attacks repeatedly, and dies when HP reaches 0.
+    ///
+    /// Animation contract — all enemy Animator Controllers must expose:
+    ///   Bool    "IsMoving"  — true while walking, false when stopped at castle.
+    ///   Trigger "Attack"    — set each time an attack is issued.
+    ///   Trigger "Die"       — set on death; deathAnimDuration controls destroy delay.
     ///
     /// Health bar: created at runtime as a world-space Canvas child so the prefab
     /// requires no additional UI setup.
@@ -19,6 +24,11 @@ namespace ArrowWar.Enemy
         private Castle.Castle _targetCastle;
         private int _currentHP;
         private bool _isDead;
+        private bool _isAttacking;
+        private float _attackTimer;
+
+        // Optional — null-safe if the prefab has no Animator.
+        private Animator _animator;
 
         // Health bar runtime refs (built in Start)
         private RectTransform _fillRect;
@@ -31,12 +41,19 @@ namespace ArrowWar.Enemy
         /// </summary>
         public event Action<int> OnDied;
 
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
         /// <summary>Called by EnemySpawner immediately after instantiation.</summary>
         public void Initialize(EnemyData data, Castle.Castle targetCastle)
         {
             _data = data;
             _targetCastle = targetCastle;
             _currentHP = data.maxHP;
+
+            _animator?.SetBool("IsMoving", true);
         }
 
         private void Start()
@@ -48,26 +65,48 @@ namespace ArrowWar.Enemy
         {
             if (_isDead) return;
 
-            MoveTowardCastle();
-            CheckCastleContact();
+            if (_isAttacking)
+                TickAttack();
+            else
+                MoveAndCheckContact();
         }
 
-        private void MoveTowardCastle()
+        // ── Movement & castle contact ──────────────────────────────────────────
+
+        private void MoveAndCheckContact()
         {
             transform.Translate(Vector2.left * (_data.moveSpeed * Time.deltaTime));
-        }
 
-        private void CheckCastleContact()
-        {
             if (_targetCastle == null) return;
 
             float contactThreshold = _targetCastle.transform.position.x + 0.5f;
             if (transform.position.x <= contactThreshold)
-            {
-                _targetCastle.TakeDamage(_data.attackDamage);
-                Die(killedByPlayer: false);
-            }
+                BeginAttacking();
         }
+
+        private void BeginAttacking()
+        {
+            _isAttacking = true;
+            _attackTimer = _data.attackInterval; // attack immediately on arrival
+
+            _animator?.SetBool("IsMoving", false);
+        }
+
+        // ── Repeating attack loop ──────────────────────────────────────────────
+
+        private void TickAttack()
+        {
+            if (_targetCastle == null) return;
+
+            _attackTimer += Time.deltaTime;
+            if (_attackTimer < _data.attackInterval) return;
+
+            _attackTimer = 0f;
+            _targetCastle.TakeDamage(_data.attackDamage);
+            _animator?.SetTrigger("Attack");
+        }
+
+        // ── Damage & death ────────────────────────────────────────────────────
 
         public void TakeDamage(int amount)
         {
@@ -85,24 +124,22 @@ namespace ArrowWar.Enemy
             if (_isDead) return;
             _isDead = true;
 
-            // Always fire so EnemySpawner can decrement its alive count.
-            // Gold is only awarded for player kills.
+            _animator?.SetBool("IsMoving", false);
+            _animator?.SetTrigger("Die");
+
+            // Fire immediately so EnemySpawner decrements its count and awards gold.
             OnDied?.Invoke(killedByPlayer ? _data.goldReward : 0);
 
-            Destroy(gameObject);
+            Destroy(gameObject, 4f);
         }
 
-        // ------------------------------------------------------------------
-        // Health bar (built programmatically — no prefab changes needed)
-        // ------------------------------------------------------------------
+        // ── Health bar (built programmatically — no prefab changes needed) ────
 
         private void BuildHealthBar()
         {
-            // World-space Canvas positioned above the enemy.
             var canvasGO = new GameObject("HPCanvas");
             canvasGO.transform.SetParent(transform, worldPositionStays: false);
             canvasGO.transform.localPosition = new Vector3(0f, 0.5f, 0f);
-            // 0.01 scale: 100-pixel canvas = 1 Unity unit wide.
             canvasGO.transform.localScale = new Vector3(0.01f, 0.01f, 1f);
 
             var canvas = canvasGO.AddComponent<Canvas>();
@@ -112,7 +149,6 @@ namespace ArrowWar.Enemy
             var canvasRt = canvasGO.GetComponent<RectTransform>();
             canvasRt.sizeDelta = new Vector2(50f, 10f);
 
-            // Dark background panel.
             var bgGO = new GameObject("BG");
             bgGO.transform.SetParent(canvasGO.transform, worldPositionStays: false);
             var bgRt = bgGO.AddComponent<RectTransform>();
@@ -121,12 +157,11 @@ namespace ArrowWar.Enemy
             bgRt.sizeDelta = Vector2.zero;
             bgGO.AddComponent<Image>().color = new Color(0.1f, 0.1f, 0.1f, 0.85f);
 
-            // Green fill — shrinks right-to-left via anchorMax.x.
             var fillGO = new GameObject("Fill");
             fillGO.transform.SetParent(canvasGO.transform, worldPositionStays: false);
             _fillRect = fillGO.AddComponent<RectTransform>();
             _fillRect.anchorMin = Vector2.zero;
-            _fillRect.anchorMax = Vector2.one;  // starts full
+            _fillRect.anchorMax = Vector2.one;
             _fillRect.sizeDelta = Vector2.zero;
             _fillImage = fillGO.AddComponent<Image>();
             _fillImage.color = Color.green;

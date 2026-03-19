@@ -1,4 +1,5 @@
 using UnityEngine;
+using ArrowWar.Castle;
 using ArrowWar.Data;
 using ArrowWar.Enemy;
 
@@ -73,11 +74,20 @@ namespace ArrowWar.Archery
             {
                 HitEnemy(other);
             }
+            else if (other.CompareTag("Castle"))
+            {
+                HitCastle(other);
+            }
             else if (other.CompareTag("Ground"))
             {
                 DestroyProjectile();
             }
-            // All other colliders (castle, UI, etc.) are intentionally ignored.
+        }
+
+        private void HitCastle(Collider2D castleCollider)
+        {
+            castleCollider.GetComponent<Castle.Castle>()?.TakeDamage(_data.damage);
+            DestroyProjectile();
         }
 
         private void HitEnemy(Collider2D enemyCollider)

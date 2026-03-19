@@ -12,7 +12,12 @@ namespace ArrowWar.Core
     /// <summary>
     /// Owns the match state machine.
     ///
-    /// Round flow (time-based):
+    /// Match flow:
+    ///   - Matches progress sequentially through the 'matches' array.
+    ///   - _currentMatchIndex is static so it survives the scene reload triggered by Next Match.
+    ///   - RestartBattle resets it to 0 (full restart from match 1).
+    ///
+    /// Round flow (time-based, within a match):
     ///   - Each round's spawn schedule runs; when it finishes, the next round starts immediately.
     ///   - Enemies from earlier rounds persist — alive count is never reset between rounds.
     ///
@@ -23,7 +28,7 @@ namespace ArrowWar.Core
     ///   - Player castle HP reaches 0 at any time.
     ///
     /// Post-match:
-    ///   - On Victory: upgrade panel opens; after Continue → Victory result shown.
+    ///   - On Victory: upgrade panel opens; Continue → Victory result; Next Match → loads next match.
     ///   - On Defeat: defeat result shown immediately.
     /// </summary>
     public class GameFlowManager : MonoBehaviour
@@ -33,20 +38,29 @@ namespace ArrowWar.Core
         [Header("Scene References")]
         [SerializeField] private Castle.Castle playerCastle;
         [SerializeField] private EnemySpawner  enemySpawner;
-        [SerializeField] private BattleHUD     battleHUD;
+        [SerializeField] private ResultPanel   resultPanel;
 
         [Header("Match Config")]
-        [SerializeField] private MatchData matchData;
+        [Tooltip("Sequential list of matches. The game progresses through them in order.")]
+        [SerializeField] private MatchData[] matches;
 
         [Header("Upgrade Shop")]
         [SerializeField] private UpgradePanel upgradePanel;
         [Tooltip("Seconds after all enemies are cleared before the upgrade panel opens.")]
         [SerializeField] private float upgradeOpenDelay = 0.8f;
 
-        private GameState _currentState;
-        private int _currentRoundIndex;
+        // Static: survives LoadScene so the match index carries over after "Next Match".
+        // Resets to 0 on domain reload (editor stop/play, or fresh launch).
+        private static int _currentMatchIndex = 0;
 
-        public GameState CurrentState => _currentState;
+        private GameState _currentState;
+        private int       _currentRoundIndex;
+
+        public GameState CurrentState      => _currentState;
+        public int       CurrentMatchIndex => _currentMatchIndex;
+        public int       MatchCount        => matches != null ? matches.Length : 0;
+
+        private MatchData CurrentMatch => matches[_currentMatchIndex];
 
         public event Action<GameState> OnStateChanged;
 
@@ -58,6 +72,15 @@ namespace ArrowWar.Core
 
         private void Start()
         {
+            if (matches == null || matches.Length == 0)
+            {
+                Debug.LogError("[GameFlowManager] 'matches' array is empty. Assign at least one MatchData in the Inspector.");
+                return;
+            }
+
+            // Clamp in case the static index is stale (e.g. a match was removed in the editor).
+            _currentMatchIndex = Mathf.Clamp(_currentMatchIndex, 0, matches.Length - 1);
+
             playerCastle.OnDestroyed          += HandleCastleDestroyed;
             enemySpawner.OnSpawnComplete       += HandleRoundSpawnComplete;
             enemySpawner.OnAllEnemiesCleared   += HandleAllEnemiesCleared;
@@ -84,15 +107,19 @@ namespace ArrowWar.Core
             switch (_currentState)
             {
                 case GameState.Battle:
-                    enemySpawner.StartRound(matchData.rounds[_currentRoundIndex]);
+                    enemySpawner.StartRound(CurrentMatch.rounds[_currentRoundIndex]);
                     break;
 
                 case GameState.Victory:
-                    StartCoroutine(OpenUpgradePanelAfterDelay());
+                    bool isFinalMatch = _currentMatchIndex >= matches.Length - 1;
+                    if (isFinalMatch)
+                        resultPanel?.Show(true);
+                    else
+                        StartCoroutine(OpenUpgradePanelAfterDelay());
                     break;
 
                 case GameState.Defeat:
-                    battleHUD.ShowResult(false);
+                    resultPanel?.Show(false);
                     break;
             }
         }
@@ -103,7 +130,7 @@ namespace ArrowWar.Core
         {
             if (_currentState != GameState.Battle) return;
 
-            bool isLastRound = _currentRoundIndex >= matchData.rounds.Length - 1;
+            bool isLastRound = _currentRoundIndex >= CurrentMatch.rounds.Length - 1;
 
             if (isLastRound)
             {
@@ -113,7 +140,7 @@ namespace ArrowWar.Core
             else
             {
                 _currentRoundIndex++;
-                enemySpawner.StartRound(matchData.rounds[_currentRoundIndex]);
+                enemySpawner.StartRound(CurrentMatch.rounds[_currentRoundIndex]);
             }
         }
 
@@ -140,23 +167,25 @@ namespace ArrowWar.Core
 
             if (upgradePanel != null)
             {
-                upgradePanel.OnContinueClicked += HandleUpgradeContinue;
+                upgradePanel.OnNextMatchClicked += HandleNextMatch;
                 upgradePanel.Show();
             }
-            else
-            {
-                battleHUD.ShowResult(true);
-            }
         }
 
-        private void HandleUpgradeContinue()
+        private void HandleNextMatch()
         {
-            upgradePanel.OnContinueClicked -= HandleUpgradeContinue;
-            battleHUD.ShowResult(true);
+            upgradePanel.OnNextMatchClicked -= HandleNextMatch;
+
+            // Advance to next match, clamped to the last available match.
+            _currentMatchIndex = Mathf.Min(_currentMatchIndex + 1, matches.Length - 1);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+        /// <summary>Reloads the scene from the beginning of match 1, resetting all progression.</summary>
         public void RestartBattle()
         {
+            _currentMatchIndex = 0;
+            Economy.ArrowInventory.ClearPersistedOwned();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

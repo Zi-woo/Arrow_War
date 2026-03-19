@@ -12,17 +12,17 @@ namespace ArrowWar.UI
     /// displays every arrow — owned arrows show as green/Owned, unowned as purchasable.
     /// Entirely self-building — attach to a canvas child GO and assign registry in Inspector.
     ///
-    /// GameFlowManager calls Show(); the Continue button fires OnContinueClicked.
+    /// GameFlowManager calls Show(); the Next Match button fires OnNextMatchClicked.
     /// </summary>
     public class UpgradePanel : MonoBehaviour
     {
         [Tooltip("The central arrow catalogue. All arrows in it are shown in the grid.")]
         [SerializeField] private ArrowRegistry registry;
 
-        public event Action OnContinueClicked;
+        public event Action OnNextMatchClicked;
 
         private Transform              _gridContainer;
-        private Button                 _continueButton;
+        private Button                 _nextMatchButton;
         private readonly List<UpgradeItemUI> _items = new List<UpgradeItemUI>();
         private bool                   _built;
 
@@ -131,28 +131,28 @@ namespace ArrowWar.UI
             grid.childAlignment = TextAnchor.UpperLeft;
             _gridContainer = gridGO.transform;
 
-            // Continue button ───────────────────────────────────────────────
-            var btnGO     = Child(panelGO.transform, "ContinueBtn");
-            var btnRt     = btnGO.GetComponent<RectTransform>();
-            btnRt.anchorMin        = new Vector2(0.5f, 0f);
-            btnRt.anchorMax        = new Vector2(0.5f, 0f);
-            btnRt.pivot            = new Vector2(0.5f, 0f);
-            btnRt.sizeDelta        = new Vector2(170f, 44f);
-            btnRt.anchoredPosition = new Vector2(0f, 14f);
-            var btnBg     = btnGO.AddComponent<Image>();
-            btnBg.color   = new Color(0.18f, 0.58f, 0.18f);
-            _continueButton               = btnGO.AddComponent<Button>();
-            _continueButton.targetGraphic = btnBg;
-            _continueButton.onClick.AddListener(HandleContinue);
+            // Next Match button (centred) ───────────────────────────────────
+            var nmBtnGO   = Child(panelGO.transform, "NextMatchBtn");
+            var nmBtnRt   = nmBtnGO.GetComponent<RectTransform>();
+            nmBtnRt.anchorMin        = new Vector2(0.5f, 0f);
+            nmBtnRt.anchorMax        = new Vector2(0.5f, 0f);
+            nmBtnRt.pivot            = new Vector2(0.5f, 0f);
+            nmBtnRt.sizeDelta        = new Vector2(170f, 44f);
+            nmBtnRt.anchoredPosition = new Vector2(0f, 14f);
+            var nmBtnBg   = nmBtnGO.AddComponent<Image>();
+            nmBtnBg.color = new Color(0.18f, 0.38f, 0.72f);
+            _nextMatchButton               = nmBtnGO.AddComponent<Button>();
+            _nextMatchButton.targetGraphic = nmBtnBg;
+            _nextMatchButton.onClick.AddListener(HandleNextMatch);
 
-            var btnTextGO = Child(btnGO.transform, "Label");
-            StretchFull(btnTextGO);
-            var btnText   = btnTextGO.AddComponent<TextMeshProUGUI>();
-            btnText.text      = "CONTINUE";
-            btnText.fontSize  = 19f;
-            btnText.fontStyle = FontStyles.Bold;
-            btnText.alignment = TextAlignmentOptions.Center;
-            btnText.color     = Color.white;
+            var nmBtnTextGO = Child(nmBtnGO.transform, "Label");
+            StretchFull(nmBtnTextGO);
+            var nmBtnText   = nmBtnTextGO.AddComponent<TextMeshProUGUI>();
+            nmBtnText.text      = "NEXT MATCH";
+            nmBtnText.fontSize  = 19f;
+            nmBtnText.fontStyle = FontStyles.Bold;
+            nmBtnText.alignment = TextAlignmentOptions.Center;
+            nmBtnText.color     = Color.white;
         }
 
         // ──────────────────────────────────────────────────────────────────────
@@ -179,10 +179,10 @@ namespace ArrowWar.UI
             }
         }
 
-        private void HandleContinue()
+        private void HandleNextMatch()
         {
             gameObject.SetActive(false);
-            OnContinueClicked?.Invoke();
+            OnNextMatchClicked?.Invoke();
         }
 
         // ──────────────────────────────────────────────────────────────────────
