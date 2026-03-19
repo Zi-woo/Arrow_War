@@ -124,6 +124,10 @@ namespace ArrowWar.Enemy
             if (_isDead) return;
             _isDead = true;
 
+            // Disable collider so arrows pass through the corpse.
+            var col = GetComponent<Collider2D>();
+            if (col != null) col.enabled = false;
+
             _animator?.SetBool("IsMoving", false);
             _animator?.SetTrigger("Die");
 

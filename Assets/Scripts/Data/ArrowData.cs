@@ -15,6 +15,10 @@ namespace ArrowWar.Data
         [Tooltip("Radius for splash damage. 0 = single target only.")]
         public float splashRadius = 0f;
 
+        [Header("Hit Effect")]
+        [Tooltip("Particle prefab spawned at the impact point. Null = no effect.")]
+        public GameObject hitEffectPrefab;
+
         [Header("Projectile Physics")]
         [Tooltip("Total seconds the arrow takes to reach the clicked target. Controls arc height.")]
         public float flightDuration = 1.5f;

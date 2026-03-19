@@ -16,10 +16,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: cb71f977c061814419dd5a6a79a1a061, type: 3}
   prefab: {fileID: 7576388973838668722, guid: f85f2a689299bda4a9dc17591c4ff4c8, type: 3}
   damage: 20
-  splashRadius: 1
+  splashRadius: 3
+  hitEffectPrefab: {fileID: 100004, guid: d205bba4d197a5f45a64abfcc6123c20, type: 3}
   flightDuration: 1.2
   gravityScale: 1
   cooldownTime: 1
-  ownedByDefault: 0
+  ownedByDefault: 1
   price: 1
   description: fire

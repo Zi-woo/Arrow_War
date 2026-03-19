@@ -17,9 +17,10 @@ MonoBehaviour:
   prefab: {fileID: 7576388973838668722, guid: 1b38ba380066a664dacb67bceaa69384, type: 3}
   damage: 20
   splashRadius: 1
+  hitEffectPrefab: {fileID: 932328041447549190, guid: 2933f8489bd3d844ea6fe510c7605a14, type: 3}
   flightDuration: 1.2
   gravityScale: 1
   cooldownTime: 1
-  ownedByDefault: 0
+  ownedByDefault: 1
   price: 1
   description: Power

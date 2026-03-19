@@ -16,10 +16,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: fc6ec0b0f09e050458575e72975d27bb, type: 3}
   prefab: {fileID: 7576388973838668722, guid: 1d2f5b906ba5be6479d6d7b231f75e49, type: 3}
   damage: 20
-  splashRadius: 1
+  splashRadius: 3
+  hitEffectPrefab: {fileID: 100004, guid: 417d95259df90e4488eb927fde45cba3, type: 3}
   flightDuration: 1.2
   gravityScale: 1
   cooldownTime: 1
-  ownedByDefault: 0
+  ownedByDefault: 1
   price: 1
   description: Ice

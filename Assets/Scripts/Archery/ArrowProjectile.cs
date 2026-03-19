@@ -74,7 +74,7 @@ namespace ArrowWar.Archery
             {
                 HitEnemy(other);
             }
-            else if (other.CompareTag("Castle"))
+            else if (other.CompareTag("EnemyCastle"))
             {
                 HitCastle(other);
             }
@@ -110,9 +110,19 @@ namespace ArrowWar.Archery
             }
         }
 
+        private void SpawnHitEffect()
+        {
+            if (_data.hitEffectPrefab != null)
+            {
+                GameObject fx = Instantiate(_data.hitEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(fx, 5f);
+            }
+        }
+
         private void DestroyProjectile()
         {
             _hasHit = true;
+            SpawnHitEffect();
             Destroy(gameObject);
         }
     }
