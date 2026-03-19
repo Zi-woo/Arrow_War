@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using ArrowWar.Castle;
 using ArrowWar.Data;
 using ArrowWar.Effects;
+using ArrowWar.UI;
 
 namespace ArrowWar.Enemy
 {
@@ -134,6 +135,9 @@ namespace ArrowWar.Enemy
 
             _animator?.SetBool("IsMoving", false);
             _animator?.SetTrigger("Die");
+
+            if (killedByPlayer && _data.goldReward > 0)
+                FloatingText.Spawn(transform.position, _data.goldReward);
 
             // Fire immediately so EnemySpawner decrements its count and awards gold.
             OnDied?.Invoke(killedByPlayer ? _data.goldReward : 0);

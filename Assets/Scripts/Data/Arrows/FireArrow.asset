@@ -24,6 +24,6 @@ MonoBehaviour:
   flightDuration: 1.2
   gravityScale: 1
   cooldownTime: 4
-  ownedByDefault: 0
+  ownedByDefault: 1
   price: 20
   description: fire
