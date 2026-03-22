@@ -25,5 +25,5 @@ MonoBehaviour:
   gravityScale: 1
   cooldownTime: 8
   ownedByDefault: 0
-  price: 40
+  price: 10
   description: Poison

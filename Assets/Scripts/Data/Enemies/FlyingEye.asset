@@ -19,3 +19,4 @@ MonoBehaviour:
   attackDamage: 15
   attackInterval: 1.5
   goldReward: 10
+  pathData: {fileID: 11400000, guid: 8754460bc5926674b99c9ceac61cf758, type: 2}

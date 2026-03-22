@@ -33,6 +33,9 @@ namespace ArrowWar.Enemy
         private Animator _animator;
         private StatusEffectReceiver _statusFx;
 
+        // Path following — null when no PathData is assigned to the enemy's EnemyData.
+        private EnemyPathFollower _pathFollower;
+
         // Health bar runtime refs (built in Start)
         private RectTransform _fillRect;
         private Image _fillImage;
@@ -57,6 +60,12 @@ namespace ArrowWar.Enemy
             _targetCastle = targetCastle;
             _currentHP = data.maxHP;
 
+            if (data.pathData != null)
+            {
+                _pathFollower = gameObject.AddComponent<EnemyPathFollower>();
+                _pathFollower.Setup(data.pathData, data.moveSpeed, _statusFx);
+            }
+
             _animator?.SetBool("IsMoving", true);
         }
 
@@ -70,9 +79,20 @@ namespace ArrowWar.Enemy
             if (_isDead) return;
 
             if (_isAttacking)
+            {
                 TickAttack();
+                return;
+            }
+
+            if (_pathFollower != null && !_pathFollower.IsComplete)
+            {
+                _pathFollower.Tick();
+                CheckCastleContact();
+            }
             else
+            {
                 MoveAndCheckContact();
+            }
         }
 
         // ── Movement & castle contact ──────────────────────────────────────────
@@ -81,7 +101,11 @@ namespace ArrowWar.Enemy
         {
             float speedMul = _statusFx != null ? _statusFx.SpeedMultiplier : 1f;
             transform.Translate(Vector2.left * (_data.moveSpeed * speedMul * Time.deltaTime));
+            CheckCastleContact();
+        }
 
+        private void CheckCastleContact()
+        {
             if (_targetCastle == null) return;
 
             float contactThreshold = _targetCastle.transform.position.x + 0.5f;

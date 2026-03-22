@@ -17,5 +17,10 @@ namespace ArrowWar.Data
         [Tooltip("Seconds between each castle attack while the enemy is stopped at the gate.")]
         public float attackInterval = 1.5f;
         public int goldReward = 5;
+
+        [Header("Movement Path")]
+        [Tooltip("Optional. When assigned the enemy follows these waypoints instead of moving straight left. " +
+                 "Leave empty to keep the default behaviour.")]
+        public PathData pathData;
     }
 }

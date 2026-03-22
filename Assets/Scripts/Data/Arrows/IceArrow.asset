@@ -25,5 +25,5 @@ MonoBehaviour:
   gravityScale: 1
   cooldownTime: 6
   ownedByDefault: 0
-  price: 30
+  price: 10
   description: Ice
