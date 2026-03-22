@@ -1,6 +1,6 @@
 # Arrow War
 
-> 화살로 몰려오는 적을 막아라!
+> 화살로 몰려오는 적을 막아라! 본 프로젝트는 바이브 코딩만으로 제작되었습니다.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7916469b-07fb-428d-9567-34c0c1c82cb1" width="350"/>
