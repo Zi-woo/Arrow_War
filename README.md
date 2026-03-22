@@ -1,6 +1,18 @@
 # Arrow War
 
-> 화살로 몰려오는 적을 막아라! 나만의 화살을 강화하며 성을 지키는 캐슬 디펜스 게임.
+> 화살로 몰려오는 적을 막아라!
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7916469b-07fb-428d-9567-34c0c1c82cb1" width="350"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/f0dd3811-f886-4d09-8c32-6a45ce5ba351" width="350"/>
+</div>
+</br>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ed2d89af-b4d2-400e-ac34-13afe531528d" width="350"/>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="https://github.com/user-attachments/assets/6c1ad041-defb-423d-bfc2-875eff65f900" width="350"/>
+</div>
 
 ---
 
@@ -59,7 +71,7 @@
 | 얼음 화살 (Ice Arrow) | 적중한 적의 이동 속도를 일정 시간 동안 감소시킵니다. |
 | 독 화살 (Poison Arrow) | 착탄 지점에 독 구름을 생성하여, 구름 안의 적에게 지속적으로 피해를 줍니다. |
 
-### 적 AI
+### 적
 - 몬스터는 스폰 후 아군 성을 향해 직선으로 이동합니다.
 - 성에 도달하면 이동을 멈추고 일정 간격으로 성을 공격합니다.
 - 몬스터가 사망하면 짧은 사망 애니메이션 후 제거됩니다.
